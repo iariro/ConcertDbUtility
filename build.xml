@@ -1,0 +1,35 @@
+<project default="zip">
+
+	<!-- C# ConcertXmlTrim -->
+
+	<property name="document" value="../../../.." />
+	<property file="${document}/build.properties" />
+
+	<target name="zip">
+		<zip destfile="${PDA_HOME}/Temp/ConcertXmlTrim.zip" basedir="." excludes="**/Debug/*,**/Release/*"/>
+	</target>
+
+	<target name="codeguess">
+		<taskdef name="codeguess" classname="kumagai.codeguess.CodeGuessTask" classpath="${CODEGUESS_LIB}" />
+		<codeguess targetfilepath=".">
+			<exclude extension="cs" code="UTF-8" />
+			<exclude extension="xml" code="UTF-8" />
+			<exclude extension="Cache" />
+			<exclude extension="cache" />
+			<exclude extension="cd" />
+			<exclude extension="csproj" />
+			<exclude extension="csproj.user" />
+			<exclude extension="dll" />
+			<exclude extension="exe" />
+			<exclude extension="ico" />
+			<exclude extension="obj" />
+			<exclude extension="pdb" />
+			<exclude extension="resources" />
+			<exclude extension="resx" />
+			<exclude extension="sln" />
+			<exclude extension="suo" />
+			<exclude extension="settings" />
+		</codeguess>
+	</target>
+
+</project>
