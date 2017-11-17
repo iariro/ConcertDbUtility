@@ -574,5 +574,16 @@ namespace ConcertDbUtility
 				connection.Close();
 			}
 		}
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            string a = Properties.Settings.Default.SchemaBaseFilePath;
+            string b = Properties.Settings.Default.SchemaFilePath;
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
+        }
 	}
 }
