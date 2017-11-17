@@ -11,16 +11,19 @@ namespace ConcertDbUtility
 	{
 		public readonly string name;
 		public readonly string siteurl;
+		public readonly bool active;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="siteurl"></param>
-		public PlayerRecord(string name, string siteurl)
+		/// <param name="active"></param>
+		public PlayerRecord(string name, string siteurl, bool active)
 		{
 			this.name = name;
 			this.siteurl = siteurl;
+			this.active = active;
 		}
 	}
 }

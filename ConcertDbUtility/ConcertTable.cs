@@ -150,6 +150,7 @@ namespace ConcertDbUtility
 			row["kaien"] = concertRecord.kaien;
 			row["hallId"] = concertRecord.hallId;
 			row["ryoukin"] = concertRecord.ryoukin;
+            row["createdate"] = concertRecord.createdate;
 
 			base.table.Rows.Add(row);
 		}
@@ -207,7 +208,14 @@ namespace ConcertDbUtility
 				}
 				else
 				{
-					throw new ApplicationException();
+					string message = "データ重複：\n";
+
+					foreach(DataRow row in rows)
+					{
+						message += string.Format("{0} {1} {2}\n", row["id"], row["date"], row["hallId"]);
+					}
+
+					throw new ApplicationException(message);
 				}
 
 				return id;
@@ -487,6 +495,7 @@ namespace ConcertDbUtility
 			row = table.NewRow();
 			row["name"] = record.name;
 			row["siteurl"] = record.siteurl;
+			row["active"] = record.active;
 
 			base.table.Rows.Add(row);
 		}

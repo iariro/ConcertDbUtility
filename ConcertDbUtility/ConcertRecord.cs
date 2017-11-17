@@ -15,6 +15,7 @@ namespace ConcertDbUtility
 		public DateTime kaien;
 		public int hallId;
 		public string ryoukin;
+        public DateTime createdate;
 
 		/// <summary>
 		///
@@ -27,7 +28,7 @@ namespace ConcertDbUtility
 		/// <param name="hallId"></param>
 		/// <param name="ryoukin"></param>
 		public ConcertRecord(string name, DateTime date, DateTime kaijou,
-			DateTime kaien, int hallId, string ryoukin)
+			DateTime kaien, int hallId, string ryoukin, DateTime createdate)
 		{
 			this.name = name;
 			this.date = date;
@@ -35,6 +36,7 @@ namespace ConcertDbUtility
 			this.kaien = kaien;
 			this.hallId = hallId;
 			this.ryoukin = ryoukin;
+            this.createdate = createdate;
 		}
 
 		public ConcertRecord(DataRow row)
@@ -46,19 +48,21 @@ namespace ConcertDbUtility
 			this.kaien = (DateTime)row["kaien"];
 			this.hallId = (int)row["hallId"];
 			this.ryoukin = (string)row["ryoukin"];
+            this.createdate = (DateTime)row["createdate"];
 		}
 
 		public override string ToString()
 		{
 			return
 				string.Format(
-					"{0}Å^{1}Å^{2}Å^{3}Å^{4}Å^{5}",
+                    "{0}Å^{1}Å^{2}Å^{3}Å^{4}Å^{5}Å^{6}",
 					name,
 					date,
 					kaijou,
 					kaien,
 					hallId,
-					ryoukin);
+					ryoukin,
+                    createdate);
 		}
 	}
 }

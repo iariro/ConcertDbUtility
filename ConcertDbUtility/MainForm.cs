@@ -32,6 +32,7 @@ namespace ConcertDbUtility
 			int i;
 			int concertId, hallId, partId, playerId, composerId;
 			bool insert;
+			DateTime createdate = DateTime.Now;
 			FileDialog dialog;
 			DialogResult dialogResult;
 			ConcertRecord record;
@@ -60,7 +61,7 @@ namespace ConcertDbUtility
 					insert = true;
 
 					// ホール情報検索。
-					hallId = dataset.HallTable [concert.hallName];
+					hallId = dataset.HallTable[concert.hallName];
 
 					if(hallId < 0)
 					{
@@ -90,6 +91,13 @@ namespace ConcertDbUtility
 
 					if(insert)
 					{
+						if (dataset.ConcertTable[concert.date, hallId, concert.kaijou] >= 0)
+						{
+							textBoxMessage.Text +=
+								string.Format("スキップしました {0} {1} {2}", concert.hallName, concert.date, concert.kaijou);
+							continue;
+						}
+
 						record =
 							new ConcertRecord(
 								concert.name,
@@ -97,7 +105,8 @@ namespace ConcertDbUtility
 								concert.kaijou,
 								concert.kaien,
 								hallId,
-								concert.ryoukin);
+								concert.ryoukin,
+								createdate);
 
 						dataset.ConcertTable.Add(record);
 						dataset.ConcertTable.Save();
@@ -132,7 +141,8 @@ namespace ConcertDbUtility
 											concert.playerCollection [i].
 												playerName,
 											playerInformationInputForm.
-												SiteUrl));
+												SiteUrl,
+												true));
 
 									dataset.PlayerTable.Save();
 									dataset.PlayerTable.Load(dataset);
@@ -483,6 +493,86 @@ namespace ConcertDbUtility
 			dataset.ConcertTable.Save();
 
 			connection.Close();
+		}
+
+		/// <summary>
+		/// 重複コンサートチェック。
+		/// </summary>
+		private void 重複コンサートチェックToolStripMenuItem_Click
+			(object sender, EventArgs e)
+		{
+			int count = 0;
+			int concertId, hallId;
+			SqlConnection connection;
+			List<Concert> concertCollection;
+			ConcertDataSet dataset;
+			ConcertCollectionDocument document;
+
+			FileDialog dialog = new OpenFileDialog();
+			dialog.Title = "コンサート情報ファイルを選択してください。";
+
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				document = new ConcertCollectionDocument();
+				document.Load(dialog.FileName);
+
+				try
+				{
+					concertCollection = document.GetConcertCollection();
+				}
+				catch (Exception exception)
+				{
+					MessageBox.Show(exception.ToString());
+					return;
+				}
+
+				connection =
+					new SqlConnection(Properties.Resources.connectionString);
+				dataset = new ConcertDataSet(connection);
+				dataset.Load();
+
+				foreach(Concert concert in concertCollection)
+				{
+					// ホール情報検索。
+					hallId = dataset.HallTable[concert.hallName];
+
+					if(hallId >= 0)
+					{
+						// 登録済みのホール。
+
+						concertId =
+							dataset.ConcertTable
+								[concert.date, hallId, concert.kaijou];
+
+						if(concertId >= 0)
+						{
+							// すでに存在するコンサート情報。
+
+							string message =
+								string.Format(
+									"{0} {1} {2}",
+									concertId,
+									concert.date,
+									concert.hallName);
+
+							textBoxMessage.AddText(message);
+
+							count++;
+						}
+					}
+				}
+
+				if(count <= 0)
+				{
+					// エラーなし。
+
+					textBoxMessage.AddText("エラーなし");
+				}
+
+				textBoxMessage.AddText(string.Empty);
+
+				connection.Close();
+			}
 		}
 	}
 }
