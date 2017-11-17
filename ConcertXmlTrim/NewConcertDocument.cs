@@ -46,9 +46,17 @@ namespace ConcertXmlTrim
 		{
 			ConcertInformation concert = null;
 
-			int childCount = DocumentElement.ChildNodes.Count;
+			int childCount = 0;
 
-			for (int i=0 ; i<childCount ; i++)
+			for (int i=0 ; i<DocumentElement.ChildNodes.Count ; i++)
+			{
+				if (DocumentElement.ChildNodes[i].NodeType == XmlNodeType.Text)
+				{
+					childCount++;
+				}
+			}
+
+			for (int i=0 ; i<DocumentElement.ChildNodes.Count ; i++)
 			{
 				if (worker != null)
 				{
