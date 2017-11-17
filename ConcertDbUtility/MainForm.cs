@@ -9,21 +9,43 @@ using System.Xml.Schema;
 namespace ConcertDbUtility
 {
 	/// <summary>
-	///
+	/// コンサート情報DB登録ツールメイン画面。
 	/// </summary>
 	public partial class MainForm
 		: Form
 	{
 		/// <summary>
-		///
+		/// コンストラクタ。
 		/// </summary>
 		public MainForm()
 		{
 			InitializeComponent();
 		}
 
+		private string schemaBaseFilePath;
+		private string schemaFilePath;
+
 		/// <summary>
-		///
+		/// 画面ロード時。設定の読み込み。
+		/// </summary>
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            schemaBaseFilePath = Properties.Settings.Default.SchemaBaseFilePath;
+            schemaFilePath = Properties.Settings.Default.SchemaFilePath;
+        }
+
+		/// <summary>
+		/// 画面クローズ時。設定の書き込み。
+		/// </summary>
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.SchemaBaseFilePath = schemaBaseFilePath;
+            Properties.Settings.Default.SchemaFilePath = schemaFilePath;
+            Properties.Settings.Default.Save();
+        }
+
+		/// <summary>
+		/// 「入力」メニュー選択時。入力処理。
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -270,6 +292,8 @@ namespace ConcertDbUtility
 				dataset.KyokumokuTable.Save();
 
 				connection.Close();
+
+				GenerateSchemaFile(schemaBaseFilePath, schemaFilePath);
 			}
 		}
 
@@ -320,48 +344,50 @@ namespace ConcertDbUtility
 		}
 
 		/// <summary>
-		///
+		/// 「スキーマ生成」メニュー選択時。
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void スキーマ生成ToolStripMenuItem_Click
-			(object sender, EventArgs e)
+		private void スキーマ生成ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			SqlConnection connection;
-			ConcertDataSet dataset;
-			ConcertSchemaDocument document;
-			FileDialog loadDialog, saveDialog;
-
-			loadDialog = new OpenFileDialog();
+			FileDialog loadDialog = new OpenFileDialog();
 			loadDialog.Title = "スキーマのもとファイルを選択してください。";
 			if(loadDialog.ShowDialog() == DialogResult.OK)
 			{
 				// 読み込むファイル選択について「OK」が押された。
 
-				// スキーマのベース読み込み。
-				document = new ConcertSchemaDocument();
-				document.Load(loadDialog.FileName);
-
-				connection =
-					new SqlConnection(Properties.Resources.connectionString);
-				dataset = new ConcertDataSet(connection);
-				dataset.Load();
-
-				// 候補の列挙。
-				document.EnumerateAll(dataset);
-
-				saveDialog = new SaveFileDialog();
+				FileDialog saveDialog = new SaveFileDialog();
 				saveDialog.Title = "生成するファイルを選択してください。";
 				if(saveDialog.ShowDialog() == DialogResult.OK)
 				{
 					// 保存するファイル選択について「OK」が押された。
 
-					document.Save(saveDialog.FileName);
-					textBoxMessage.AddText(saveDialog.FileName + "生成しました。");
+					GenerateSchemaFile(loadDialog.FileName, saveDialog.FileName);
 				}
-
-				connection.Close();
 			}
+		}
+
+		/// <summary>
+		/// スキーマ生成実処理。
+		/// </summary>
+		/// <param name="schemaBaseFilePath">スキーマ元ファイルパス</param>
+		/// <param name="schemaFilePath">スキーマファイルパス</param>
+		private void GenerateSchemaFile(string schemaBaseFilePath, string schemaFilePath)
+		{
+			// スキーマのベース読み込み。
+			ConcertSchemaDocument document = new ConcertSchemaDocument();
+			document.Load(schemaBaseFilePath);
+
+			SqlConnection connection =
+				new SqlConnection(Properties.Resources.connectionString);
+			ConcertDataSet dataset = new ConcertDataSet(connection);
+			dataset.Load();
+
+			// 候補の列挙。
+			document.EnumerateAll(dataset);
+
+			document.Save(schemaFilePath);
+			textBoxMessage.AddText(saveDialog.FileName + "生成しました。");
+
+			connection.Close();
 		}
 
 		/// <summary>
@@ -574,16 +600,5 @@ namespace ConcertDbUtility
 				connection.Close();
 			}
 		}
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            string a = Properties.Settings.Default.SchemaBaseFilePath;
-            string b = Properties.Settings.Default.SchemaFilePath;
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Properties.Settings.Default.Save();
-        }
 	}
 }
