@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Xml;
@@ -356,9 +357,9 @@ namespace ConcertDbUtility
 		/// </summary>
 		private void GenerateSchemaFile()
 		{
-			if (!File.Exists(schemaBaseFilePath)
+			if (!File.Exists(schemaBaseFilePath))
 			{
-				// 読み込むファイルがある
+				// 読み込むファイルがない
 
 				FileDialog loadDialog = new OpenFileDialog();
 				loadDialog.Title = "スキーマのもとファイルを選択してください。";
@@ -391,7 +392,7 @@ namespace ConcertDbUtility
 			document.EnumerateAll(dataset);
 
 			document.Save(schemaFilePath);
-			textBoxMessage.AddText(saveDialog.FileName + "生成しました。");
+            textBoxMessage.AddText(schemaFilePath + "生成しました。");
 
 			connection.Close();
 		}
