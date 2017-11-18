@@ -293,7 +293,7 @@ namespace ConcertDbUtility
 
 				connection.Close();
 
-				GenerateSchemaFile(schemaBaseFilePath, schemaFilePath);
+				GenerateSchemaFile();
 			}
 		}
 
@@ -348,30 +348,36 @@ namespace ConcertDbUtility
 		/// </summary>
 		private void スキーマ生成ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			FileDialog loadDialog = new OpenFileDialog();
-			loadDialog.Title = "スキーマのもとファイルを選択してください。";
-			if(loadDialog.ShowDialog() == DialogResult.OK)
-			{
-				// 読み込むファイル選択について「OK」が押された。
-
-				FileDialog saveDialog = new SaveFileDialog();
-				saveDialog.Title = "生成するファイルを選択してください。";
-				if(saveDialog.ShowDialog() == DialogResult.OK)
-				{
-					// 保存するファイル選択について「OK」が押された。
-
-					GenerateSchemaFile(loadDialog.FileName, saveDialog.FileName);
-				}
-			}
+			GenerateSchemaFile();
 		}
 
 		/// <summary>
 		/// スキーマ生成実処理。
 		/// </summary>
-		/// <param name="schemaBaseFilePath">スキーマ元ファイルパス</param>
-		/// <param name="schemaFilePath">スキーマファイルパス</param>
-		private void GenerateSchemaFile(string schemaBaseFilePath, string schemaFilePath)
+		private void GenerateSchemaFile()
 		{
+			if (!File.Exists(schemaBaseFilePath)
+			{
+				// 読み込むファイルがある
+
+				FileDialog loadDialog = new OpenFileDialog();
+				loadDialog.Title = "スキーマのもとファイルを選択してください。";
+				if(loadDialog.ShowDialog() == DialogResult.OK)
+				{
+					// 読み込むファイル選択について「OK」が押された。
+
+					FileDialog saveDialog = new SaveFileDialog();
+					saveDialog.Title = "生成するファイルを選択してください。";
+					if(saveDialog.ShowDialog() == DialogResult.OK)
+					{
+						// 保存するファイル選択について「OK」が押された。
+
+						schemaBaseFilePath = loadDialog.FileName;
+						schemaFilePath = saveDialog.FileName;
+					}
+				}
+			}
+
 			// スキーマのベース読み込み。
 			ConcertSchemaDocument document = new ConcertSchemaDocument();
 			document.Load(schemaBaseFilePath);
