@@ -76,8 +76,6 @@ namespace ConcertXmlTrim
 		{
 			base.OnRunWorkerCompleted(e);
 
-			progressBar.Value = 0;
-
 			if (e.Error != null)
 			{
 				MessageBox.Show(e.Error.ToString());
@@ -85,7 +83,8 @@ namespace ConcertXmlTrim
 			else
 			{
 				MessageBox.Show("完了");
-			}
+                progressBar.Value = 0;
+            }
 		}
 	}
 }
