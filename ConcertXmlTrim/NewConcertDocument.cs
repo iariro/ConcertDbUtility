@@ -46,17 +46,10 @@ namespace ConcertXmlTrim
 		{
 			ConcertInformation concert = null;
 
-			int childCount = 0;
+            int i;
+			int childCount = DocumentElement.ChildNodes.Count;
 
-			for (int i=0 ; i<DocumentElement.ChildNodes.Count ; i++)
-			{
-				if (DocumentElement.ChildNodes[i].NodeType == XmlNodeType.Text)
-				{
-					childCount++;
-				}
-			}
-
-			for (int i=0 ; i<DocumentElement.ChildNodes.Count ; i++)
+			for (i=0 ; i<DocumentElement.ChildNodes.Count ; i++)
 			{
 				if (worker != null)
 				{
@@ -746,6 +739,7 @@ namespace ConcertXmlTrim
 					}
 				}
 			}
-		}
+            worker.ReportProgress(i * 100 / childCount);
+        }
 	}
 }
