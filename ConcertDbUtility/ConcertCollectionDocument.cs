@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
@@ -6,15 +6,15 @@ using System.Xml;
 namespace ConcertDbUtility
 {
 	/// <summary>
-	/// ƒRƒ“ƒT[ƒgî•ñXMLƒhƒLƒ…ƒƒ“ƒgB
+	/// ã‚³ãƒ³ã‚µãƒ¼ãƒˆæƒ…å ±XMLãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã€‚
 	/// </summary>
 	class ConcertCollectionDocument
 		: XmlDocument
 	{
 		/// <summary>
-		/// ƒRƒ“ƒT[ƒgî•ñƒRƒŒƒNƒVƒ‡ƒ“‚ğæ“¾B
+		/// ã‚³ãƒ³ã‚µãƒ¼ãƒˆæƒ…å ±ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã‚’å–å¾—ã€‚
 		/// </summary>
-		/// <returns>ƒRƒ“ƒT[ƒgî•ñƒRƒŒƒNƒVƒ‡ƒ“</returns>
+		/// <returns>ã‚³ãƒ³ã‚µãƒ¼ãƒˆæƒ…å ±ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³</returns>
 		public List<Concert> GetConcertCollection()
 		{
 			List<Concert> collections = new List<Concert>();
@@ -26,7 +26,7 @@ namespace ConcertDbUtility
 
 				if (element != null)
 				{
-					// —v‘f‚Å‚ ‚Á‚½B
+					// è¦ç´ ã§ã‚ã£ãŸã€‚
 
 					try
 					{
@@ -36,7 +36,7 @@ namespace ConcertDbUtility
 					{
 						throw new Exception(
 							string.Format(
-								"{0}ŒÂ–Ú‚ÌƒRƒ“ƒT[ƒgî•ñ‚ÅƒGƒ‰[\r\n{1}",
+								"{0}å€‹ç›®ã®ã‚³ãƒ³ã‚µãƒ¼ãƒˆæƒ…å ±ã§ã‚¨ãƒ©ãƒ¼\r\n{1}",
 								i + 1,
 								exception.ToString()));
 					}

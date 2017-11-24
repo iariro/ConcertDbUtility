@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -30,7 +30,7 @@ namespace ConcertDbUtility
 		{
 			InitializeComponent();
 
-			label2.Text = "ƒz[ƒ‹F" + name;
+			label2.Text = "ãƒ›ãƒ¼ãƒ«ï¼š" + name;
 		}
 
 		/// <summary>

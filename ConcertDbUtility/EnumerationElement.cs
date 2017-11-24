@@ -1,4 +1,4 @@
-using System.Xml;
+ï»¿using System.Xml;
 using NUnit.Framework;
 
 namespace ConcertDbUtility
@@ -7,7 +7,7 @@ namespace ConcertDbUtility
 	public class StringEnumeratorTest1
 	{
 		private const string path =
-			@"C:\Documents and Settings\w81515sr\My Documents\Sorcerer My Documents\Private\‰¹Šy\ƒRƒ“ƒT[ƒg\ConcertSchemaBase.xsd";
+			@"C:\Documents and Settings\w81515sr\My Documents\Sorcerer My Documents\Private\éŸ³æ¥½\ã‚³ãƒ³ã‚µãƒ¼ãƒˆ\ConcertSchemaBase.xsd";
 
 		[Test]
 		public void Test01()
@@ -79,7 +79,7 @@ namespace ConcertDbUtility
 			{
 				if(s.Length > 0)
 				{
-					// ‹ó•¶š—ñ‚Å‚Í‚È‚¢B
+					// ç©ºæ–‡å­—åˆ—ã§ã¯ãªã„ã€‚
 
 					enumeration =
 						document.CreateElement(

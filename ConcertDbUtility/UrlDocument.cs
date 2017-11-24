@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -27,7 +27,7 @@ namespace ConcertDbUtility
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("u{0}v‚ÌƒTƒCƒgî•ñ‚ªd•¡‚µ‚Ä‚¢‚Ü‚·B", name);
+			return string.Format("ã€Œ{0}ã€ã®ã‚µã‚¤ãƒˆæƒ…å ±ãŒé‡è¤‡ã—ã¦ã„ã¾ã™ã€‚", name);
 		}
 	}
 
@@ -65,11 +65,11 @@ namespace ConcertDbUtility
 				{
 					if(reader.NodeType == XmlNodeType.Element)
 					{
-						// —v‘f‚Å‚ ‚éB
+						// è¦ç´ ã§ã‚ã‚‹ã€‚
 
 						if(reader.Name == "A")
 						{
-							// ƒAƒ“ƒJ[ƒ^ƒOB
+							// ã‚¢ãƒ³ã‚«ãƒ¼ã‚¿ã‚°ã€‚
 
 							reader.MoveToAttribute("HREF");
 							url = reader.Value;

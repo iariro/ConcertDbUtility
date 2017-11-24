@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -208,7 +208,7 @@ namespace ConcertDbUtility
 				}
 				else
 				{
-					string message = "ƒf[ƒ^d•¡F\n";
+					string message = "ãƒ‡ãƒ¼ã‚¿é‡è¤‡ï¼š\n";
 
 					foreach(DataRow row in rows)
 					{

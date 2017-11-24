@@ -1,4 +1,4 @@
-
+﻿
 namespace ConcertDbUtility
 {
 	/// <summary>
@@ -8,7 +8,7 @@ namespace ConcertDbUtility
 		: XmlSchemaDocument
 	{
 		/// <summary>
-		/// ����񋓁B
+		/// 候補を列挙。
 		/// </summary>
 		/// <param name="dataset"></param>
 		public void EnumerateAll(ConcertDataSet dataset)
