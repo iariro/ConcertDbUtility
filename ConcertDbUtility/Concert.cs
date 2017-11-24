@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
@@ -6,7 +6,7 @@ using System.Xml;
 namespace ConcertDbUtility
 {
 	/// <summary>
-	///
+	/// コンサート情報
 	/// </summary>
 	class Concert
 	{
@@ -20,16 +20,12 @@ namespace ConcertDbUtility
 		readonly public string ryoukin;
 
 		/// <summary>
-		///
+		/// XML要素からコンサート情報を読み込み
+        /// 2017/11/24 : 新スキーマに対応
 		/// </summary>
-		/// <param name="element"></param>
+		/// <param name="element">concert要素</param>
 		public Concert(XmlElement element)
 		{
-			XmlNode hallNode;
-			XmlNode kyokuCollectionNode;
-			XmlNode playerCollectionNode;
-			XmlNode ryoukinNode;
-
 			name = element.Attributes["name"].Value;
 
 			date = DateTime.Parse
@@ -41,56 +37,89 @@ namespace ConcertDbUtility
 				element.Attributes["date"].Value + " " +
 				element.Attributes["kaien"].Value);
 
-			hallNode = element.SelectSingleNode("hall");
-			if(hallNode != null)
-			{
-				hallName = hallNode.Attributes["name"].Value;
-			}
+            if (element.Attributes["hall"] != null)
+            {
+                // 属性あり
+
+                hallName = element.Attributes["hall"].Value;
+            }
+            else
+            {
+                // 属性なし
+
+                XmlNode hallNode = element.SelectSingleNode("hall");
+                if (hallNode != null)
+                {
+                    // hall要素あり
+
+                    hallName = hallNode.Attributes["name"].Value;
+                }
+            }
+
+            if (element.Attributes["ryoukin"] != null)
+            {
+                // 属性あり
+
+                ryoukin = element.Attributes["ryoukin"].Value;
+            }
+            else
+            {
+                // 属性なし
+
+                XmlNode ryoukinNode = element.SelectSingleNode("ryoukin");
+                if (ryoukinNode != null)
+                {
+                    // ryoukin要素あり
+
+                    ryoukin = ryoukinNode.Attributes["value"].Value;
+                }
+            }
 
 			kyokuCollection = new List<KyokumokuElement>();
-			kyokuCollectionNode = element.SelectSingleNode("kyokuCollection");
+            XmlNode kyokuCollectionNode = element.SelectSingleNode("kyokuCollection");
 			if(kyokuCollectionNode != null)
 			{
-				foreach(XmlNode kyoku in kyokuCollectionNode.ChildNodes)
+                // kyokuCollection要素あり
+
+                foreach(XmlNode kyoku in kyokuCollectionNode.ChildNodes)
 				{
 					if(kyoku.NodeType == XmlNodeType.Element)
 					{
-						kyokuCollection.Add(new KyokumokuElement(kyoku));
+                        // 要素である
+
+                        kyokuCollection.Add(new KyokumokuElement(kyoku));
 					}
 				}
 			}
 
 			playerCollection = new List<Player>();
-			playerCollectionNode = element.SelectSingleNode("playerCollection");
+            XmlNode playerCollectionNode = element.SelectSingleNode("playerCollection");
 			if(playerCollectionNode != null)
 			{
-				foreach(XmlNode player in playerCollectionNode.ChildNodes)
-				{
-					if(player.NodeType == XmlNodeType.Element)
-					{
-						if(player != null)
-						{
-							playerCollection.Add(new Player(player));
-						}
-						else
-						{
-							System.Diagnostics.Debug.WriteLine(name);
-						}
-					}
-				}
-			}
+                // playerCollection要素あり
 
-			ryoukinNode = element.SelectSingleNode("ryoukin");
-			if(ryoukinNode != null)
-			{
-				ryoukin = ryoukinNode.Attributes["value"].Value;
+                foreach (XmlNode player in playerCollectionNode.ChildNodes)
+                {
+                    if (player != null && player.NodeType == XmlNodeType.Element)
+                    {
+                        // 要素である
+
+                        playerCollection.Add(new Player(player));
+                    }
+                    else
+                    {
+                        // 要素ではない
+
+                        System.Diagnostics.Debug.WriteLine(name);
+                    }
+                }
 			}
 		}
 
 		/// <summary>
-		///
+		/// デバッグ用の文字列化
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>全内容文字列</returns>
 		public override string ToString()
 		{
 			string ret;
