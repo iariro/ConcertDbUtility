@@ -640,9 +640,8 @@ namespace ConcertXmlTrim
 						element.SetAttribute("date", concert.Date);
 						element.SetAttribute("kaijou", concert.Kaijou);
 						element.SetAttribute("kaien", concert.Kaien);
-
-						elementHall.SetAttribute("name", concert.hall);
-						elementRyoukin.SetAttribute("value", concert.ryoukin);
+                        element.SetAttribute("hall", concert.hall);
+                        element.SetAttribute("ryoukin", concert.ryoukin);
 
 						if (concert.composerNameAndTitles.Count > 0)
 						{
