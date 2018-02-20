@@ -655,15 +655,16 @@ namespace ConcertDbUtility
 		}
 
 		/// <summary>
-		///
+		/// レコード追加
 		/// </summary>
-		/// <param name="record"></param>
+		/// <param name="record">追加レコード</param>
 		public void Add(ComposerRecord record)
 		{
 			DataRow row;
 
 			row = table.NewRow();
 			row["name"] = record.name;
+            row["namevalue"] = record.namevalue;
 
 			table.Rows.Add(row);
 		}

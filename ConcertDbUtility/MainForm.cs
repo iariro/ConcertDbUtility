@@ -245,8 +245,8 @@ namespace ConcertDbUtility
 								{
 									dataset.ComposerTable.Add(
 										new ComposerRecord(
-											concert.kyokuCollection [i].
-												composerName));
+											concert.kyokuCollection[i].composerName,
+                                            3));
 
 									dataset.ComposerTable.Save();
 									dataset.ComposerTable.Load(dataset);
