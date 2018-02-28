@@ -664,7 +664,7 @@ namespace ConcertDbUtility
 
 			row = table.NewRow();
 			row["name"] = record.name;
-            row["namevalue"] = record.namevalue;
+            row["rank"] = record.namevalue;
 
 			table.Rows.Add(row);
 		}
