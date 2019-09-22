@@ -64,7 +64,10 @@ namespace ConcertDbUtility
                 if (!CheckDuplicateConcert(concertCollection))
                 {
                     // チェックNG
-                    return;
+                    if (MessageBox.Show("重複がありますが続行しますか？") == DialogResult.No)
+                    {
+                        return;
+                    }
                 }
 
                 List<string> emptyCheckErrors = CheckEmptyValue(concertCollection);
