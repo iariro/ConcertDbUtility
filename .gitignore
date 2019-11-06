@@ -3,3 +3,4 @@
 /ConcertXmlTrim/obj
 /ConcertXmlTrim/bin
 /*.suo
+/ConcertDbUtility/*.un~

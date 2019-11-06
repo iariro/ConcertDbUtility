@@ -164,8 +164,8 @@ namespace ConcertDbUtility
                 {
                     if (dataset.ConcertTable[concert.date, hallId, concert.kaijou] >= 0)
                     {
-                        textBoxMessage.Text +=
-                            string.Format("スキップしました {0} {1} {2}", concert.hallName, concert.date, concert.kaijou);
+                        textBoxMessage.AddText(
+                            string.Format("スキップしました {0} {1} {2}", concert.hallName, concert.date, concert.kaijou));
                         continue;
                     }
 

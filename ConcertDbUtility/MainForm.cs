@@ -64,7 +64,10 @@ namespace ConcertDbUtility
                 if (!CheckDuplicateConcert(concertCollection))
                 {
                     // チェックNG
-                    if (MessageBox.Show("重複がありますが続行しますか？") == DialogResult.No)
+                    if (MessageBox.Show(
+						"重複エラー",
+						"重複がありますが続行しますか？",
+						MessageBoxButtons.YesNo) == DialogResult.No)
                     {
                         return;
                     }
