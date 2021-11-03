@@ -316,7 +316,7 @@ namespace ConcertDbUtility
                                 new KyokumokuRecord(
                                     concertId,
                                     composerId,
-                                    concert.kyokuCollection[i].title));
+                                    concert.kyokuCollection[i].title.Trim()));
                         }
                     }
 
