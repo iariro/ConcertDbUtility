@@ -19,6 +19,7 @@ namespace ConcertDbUtility
 		{
 			List<Concert> collections = new List<Concert>();
 
+            int j = 0;
 			for (int i=0 ; i<DocumentElement.ChildNodes.Count ; i++)
 			{
 				XmlElement element =
@@ -28,6 +29,7 @@ namespace ConcertDbUtility
 				{
 					// 要素であった。
 
+                    j++;
 					try
 					{
 						collections.Add(new Concert(element));
@@ -37,7 +39,7 @@ namespace ConcertDbUtility
 						throw new Exception(
 							string.Format(
 								"{0}個目のコンサート情報でエラー\r\n{1}",
-								i + 1,
+								j,
 								exception.ToString()));
 					}
 				}
