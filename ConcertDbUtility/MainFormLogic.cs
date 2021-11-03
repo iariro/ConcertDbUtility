@@ -117,6 +117,28 @@ namespace ConcertDbUtility
         }
 
         /// <summary>
+        /// 文字列長チェック
+        /// </summary>
+        private List<string> CheckStringLength(List<Concert> concertCollection)
+        {
+            List<string> errors = new List<string>();
+
+            for (int i = 0; i < concertCollection.Count; i++)
+            {
+                Concert concert = concertCollection[i];
+                foreach (KyokumokuElement kyokumoku in concert.kyokuCollection)
+                {
+                    if (kyokumoku.title.Length > 100)
+                    {
+                        errors.Add(string.Format("{0}番目のコンサートの曲目長すぎ", i + 1));
+                    }
+                }
+            }
+
+            return errors;
+        }
+
+        /// <summary>
         /// 入力実処理
         /// </summary>
         /// <param name="concertCollection">コンサート情報コレクション</param>

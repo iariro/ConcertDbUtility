@@ -74,12 +74,18 @@ namespace ConcertDbUtility
                 }
 
                 List<string> emptyCheckErrors = CheckEmptyValue(concertCollection);
+                List<string> stringLengthCheckErrors = CheckStringLength(concertCollection);
 
-                if (emptyCheckErrors.Count > 0)
+                if (emptyCheckErrors.Count > 0 ||
+                    stringLengthCheckErrors.Count > 0)
                 {
                     // チェックNG
 
                     foreach (string error in emptyCheckErrors)
+                    {
+                        MessageBox.Show(error);
+                    }
+                    foreach (string error in stringLengthCheckErrors)
                     {
                         MessageBox.Show(error);
                     }
